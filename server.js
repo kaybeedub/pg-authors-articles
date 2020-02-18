@@ -19,3 +19,9 @@ db.readArticle()
     console.log('one article is being read');
   })
   .catch(err => console.error(err));
+
+db.deleteArticle()
+  .then(() => {
+    console.log('and now we delete an article');
+  })
+  .catch(err => console.error(err));

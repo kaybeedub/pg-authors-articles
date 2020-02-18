@@ -40,8 +40,14 @@ const readArticle = async id => {
   return response.rows[0];
 };
 
+const deleteArticle = async id => {
+  const SQL = 'DELETE from articles WHERE id=$1';
+  await client.query(SQL, [id]);
+};
+
 module.exports = {
   sync,
   readArticles,
   readArticle,
+  deleteArticle,
 };
