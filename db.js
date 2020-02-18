@@ -6,11 +6,9 @@ const client = new Client('postgres://localhost/pg_author_article_db');
 client.connect();
 
 const sync = async () => {
-  //  An article has a title, body, date_created, id which is a UUID, and an author_id which references the id of an author
-
   const SQL = `
-    DROP TABLE IF EXISTS authors;
-    DROP TABLE IF EXISTS articles;
+  DROP TABLE IF EXISTS articles;
+  DROP TABLE IF EXISTS authors;
     CREATE TABLE authors (
       id UUID PRIMARY KEY,
       first_name VARCHAR,
@@ -26,8 +24,24 @@ const sync = async () => {
     );
   `;
   await client.query(SQL);
+  const articles = await readArticles();
+  console.log(await readArticles(articles));
+};
+
+const readArticles = async () => {
+  const SQL = 'SELECT * FROM articles';
+  const response = await client.query(SQL);
+  return response.rows;
+};
+
+const readArticle = async id => {
+  const SQL = 'SELECT * FROM articles WHERE id=$1';
+  const response = await client.query(SQL, [id]);
+  return response.rows[0];
 };
 
 module.exports = {
   sync,
+  readArticles,
+  readArticle,
 };
