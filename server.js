@@ -25,3 +25,5 @@ db.deleteArticle()
     console.log('and now we delete an article');
   })
   .catch(err => console.error(err));
+
+db.createArticle('javascript for dummies', 'here is my article body, heyyy');
